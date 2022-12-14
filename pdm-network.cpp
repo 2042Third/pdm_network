@@ -95,8 +95,8 @@ void pdm_network::upload_sync(std::string fname){
     }
 }
 
-void pdm_network::upload_sync_multi(std::string fname){
-    std::string file_name=fname;
+void pdm_network::upload_sync_multi(const std::string& fname){
+    const std::string& file_name=fname;
     CURL *curl;
     CURLcode res;
 
@@ -242,4 +242,40 @@ void pdm_network::download_sync(std::string fname, std::string fpath){
     fclose(ftpfile.stream); /* close the local file */
   curl_global_cleanup();
 }
+
+pdm_network::pdm_network() {
+  curl_global_init(CURL_GLOBAL_ALL);
+}
+
+int pdm_network::post(const std::string &a, const std::string& url) {
+  CURL *curl;
+  CURLcode res;
+
+  curl = curl_easy_init();
+  if (curl){
+
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, a.c_str());
+
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    /* Now run off and do what you have been told! */
+    res = curl_easy_perform(curl);
+    /* Check for errors */
+    if(res != CURLE_OK) {
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+      return 0;
+    }
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+  }
+
+  return 1;
+}
+
+pdm_network::~pdm_network() {
+  curl_global_cleanup();
+}
+
+
+
 
