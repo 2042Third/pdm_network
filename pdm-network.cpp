@@ -243,3 +243,39 @@ void pdm_network::download_sync(std::string fname, std::string fpath){
   curl_global_cleanup();
 }
 
+void pdm_network::post(const std::string& input, const std::string& url
+                       , size_t read_callback(char *dest, size_t size, size_t nmemb, void *userp)
+                       , WriteThis *wt
+                       ){
+  CURL *curl;
+  CURLcode res;
+  curl_global_init(CURL_GLOBAL_ALL); // init winsock
+  curl = curl_easy_init(); // curl handle
+  if(curl) {
+    // Header setup
+    struct curl_slist *headers = NULL;
+    headers = curl_slist_append(headers, "Content-Type: application/json");
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers); // Set Headers
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, input.c_str());// Set input string to send to the server
+    if (read_callback){
+      curl_easy_setopt(curl, CURLOPT_READFUNCTION, read_callback);
+      curl_easy_setopt(curl, CURLOPT_READDATA, wt);/* pointer to pass to our read function */
+    }
+    /* Set the expected POST size. If you want to POST large amounts of data,
+       consider CURLOPT_POSTFIELDSIZE_LARGE */
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, (long)input.size());
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); // Set URL to PDM
+
+    res = curl_easy_perform(curl); // Execute the action
+    /* Check for errors */
+    if(res != CURLE_OK) {
+      fprintf(stderr, "curl_easy_perform() failed: %s\n",
+              curl_easy_strerror(res));
+    }
+    // Header and Curl Cleanup
+    curl_easy_cleanup(curl);
+    curl_slist_free_all(headers);
+  }
+  curl_global_cleanup();
+}
+

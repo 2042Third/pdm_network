@@ -14,7 +14,10 @@
 
 #include <string>
 //#include <curl/curl.h>
-
+struct WriteThis {
+  const char *readptr;
+  size_t sizeleft;
+};
 class pdm_network{
 public:
     explicit pdm_network(std::string a){user_nm=a;}
@@ -22,6 +25,9 @@ public:
     void upload_sync_multi(std::string fname);
     void download_sync(std::string fname);
     void download_sync(std::string fname, std::string fpath);
+    static void post(const std::string& input, const std::string& url
+                     , size_t read_callback(char *dest, size_t size, size_t nmemb, void *userp)
+                     , WriteThis *wt);
 private:
     static size_t my_fwrite(void *buffer, size_t size, size_t nmemb, void *stream);
     std::string user_nm;
