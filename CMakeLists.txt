@@ -26,7 +26,7 @@ add_library(pdm-network
 target_compile_options(
         pdm-network PRIVATE
         -m64
-
+        -DCURL_STATICLIB -lcurl -lws2_32
 )
 if(WIN32)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.dll.a ${CURL_LIBRARIES} )
