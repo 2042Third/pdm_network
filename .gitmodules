@@ -1,0 +1,3 @@
+[submodule "openssl-cmake"]
+	path = openssl-cmake
+	url = https://github.com/2042Third/openssl-cmake.git
