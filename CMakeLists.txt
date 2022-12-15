@@ -1,3 +1,15 @@
+
+# openssl
+if (WIN32)
+    add_subdirectory(openssl-cmake)
+
+elseif (APPLE)
+    add_subdirectory(openssl-cmake)
+elseif (UNIX)
+    add_subdirectory(openssl-cmake)
+endif ()
+
+# libcurl
 if (WIN32)
     include_directories(lib/)
     link_directories(include/)
@@ -26,7 +38,7 @@ add_library(pdm-network
 target_compile_options(
         pdm-network PRIVATE
         -m64
-        -DCURL_STATICLIB -lcurl -lws2_32
+        -DCURL_STATICLIB -lcurl -lssl
 )
 if(WIN32)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.dll.a ${CURL_LIBRARIES} )
