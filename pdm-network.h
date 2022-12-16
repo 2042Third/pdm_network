@@ -8,7 +8,7 @@
 #include <string>
 
 struct NetWriter {
-  const char *readptr;
+  std::string readptr;
   size_t sizeleft;
 };
 class pdm_network{
