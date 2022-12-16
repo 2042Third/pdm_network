@@ -27,6 +27,8 @@ set(HAVE_RAND_STATUS TRUE CACHE INTERNAL "" FORCE)
 set(HAVE_RAND_SCREEN FALSE CACHE INTERNAL "" FORCE)
 set(HAVE_RAND_EGD FALSE CACHE INTERNAL "" FORCE)
 
+# static curl
+SET(CMAKE_FIND_LIBRARY_SUFFIXES .lib .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
 if (WIN32)
     include_directories(lib/)
     link_directories(include/)
@@ -64,7 +66,7 @@ target_compile_options ( pdm-network PRIVATE
     -lcurl -lssl
 )
 if(WIN32)
-    target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.dll.a  ssl crypto ${CURL_LIBRARIES} )
+    target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.a  ssl crypto ${CURL_LIBRARIES} )
 elseif (APPLE)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/libcurl.a ${CURL_LIBRARIES} )
 elseif (UNIX)
