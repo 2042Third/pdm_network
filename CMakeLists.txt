@@ -66,7 +66,11 @@ target_compile_options ( pdm-network PRIVATE
     -lcurl -lssl
 )
 if(WIN32)
-    target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.a  ssl crypto ${CURL_LIBRARIES} )
+    target_link_libraries(pdm-network
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.dll.a
+#        ${CMAKE_CURRENT_SOURCE_DIR}/lib/libz.a # add this if not found
+        ssl crypto
+        ${CURL_LIBRARIES} )
 elseif (APPLE)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/libcurl.a ${CURL_LIBRARIES} )
 elseif (UNIX)
