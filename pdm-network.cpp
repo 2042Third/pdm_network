@@ -256,6 +256,7 @@ void pdm_network::post(const std::string& input, const std::string& url
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers); // Set Headers
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L); // Skip peer
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, input.c_str());// Set input string to send to the server
     if (read_callback){
       curl_easy_setopt(curl, CURLOPT_READFUNCTION, read_callback);
