@@ -1,20 +1,20 @@
 
 # openssl
-if (WIN32)
-    add_subdirectory(openssl-cmake)
-elseif (APPLE)
-    add_subdirectory(openssl-cmake)
-elseif (UNIX)
-    add_subdirectory(openssl-cmake)
-endif ()
+#if (WIN32)
+#    add_subdirectory(openssl-cmake)
+#elseif (APPLE)
+#    add_subdirectory(openssl-cmake)
+#elseif (UNIX)
+#    add_subdirectory(openssl-cmake)
+#endif ()
 
 # Set OpenSSL target names for Curl
 add_library(OpenSSL::SSL STATIC IMPORTED)
 add_library(OpenSSL::Crypto STATIC IMPORTED)
-set_target_properties(OpenSSL::SSL PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/deps/openssl-cmake/usr/local/lib/libssl.a)
-set_target_properties(OpenSSL::Crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/deps/openssl-cmake/usr/local/lib/libcrypto.a)
-set(OPENSSL_ROOT_DIR ${CMAKE_BINARY_DIR}/deps/openssl-cmake/usr/local)
-set(OPENSSL_INCLUDE_DIR ${CMAKE_BINARY_DIR}/deps/openssl-cmake/usr/local/include)
+set_target_properties(OpenSSL::SSL PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_DIR}/lib/local/lib/libssl.a)
+set_target_properties(OpenSSL::Crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_DIR}/lib/local/lib/libcrypto.a)
+set(OPENSSL_ROOT_DIR ${CMAKE_CURRENT_DIR}/lib/local)
+set(OPENSSL_INCLUDE_DIR ${CMAKE_CURRENT_DIR}/lib/local/include)
 # libcurl
 set(HAVE_OPENSSL_CRYPTO_H TRUE CACHE INTERNAL "" FORCE)
 set(HAVE_OPENSSL_ERR_H TRUE CACHE INTERNAL "" FORCE)
