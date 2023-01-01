@@ -10,6 +10,8 @@
 struct NetWriter {
   std::string readptr;
   size_t sizeleft;
+  void* pdm_runtime;
+  std::string data;
 };
 class pdm_network{
 public:
