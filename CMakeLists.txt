@@ -11,8 +11,8 @@
 # Set OpenSSL target names for Curl
 add_library(OpenSSL::SSL STATIC IMPORTED)
 add_library(OpenSSL::Crypto STATIC IMPORTED)
-set_target_properties(OpenSSL::SSL PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_DIR}/lib/local/lib/libssl.a)
-set_target_properties(OpenSSL::Crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_DIR}/lib/local/lib/libcrypto.a)
+set_target_properties(OpenSSL::SSL PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/local/lib/libssl.a)
+set_target_properties(OpenSSL::Crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/local/lib/libcrypto.a)
 set(OPENSSL_ROOT_DIR ${CMAKE_CURRENT_DIR}/lib/local)
 set(OPENSSL_INCLUDE_DIR ${CMAKE_CURRENT_DIR}/lib/local/include)
 # libcurl
@@ -67,6 +67,8 @@ target_compile_options ( pdm-network PRIVATE
 if(WIN32)
     target_link_libraries(pdm-network
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.dll.a
+        OpenSSL::SSL
+        OpenSSL::Crypto
         ${CURL_LIBRARIES} )
 elseif (APPLE)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/libcurl.a ${CURL_LIBRARIES} )
