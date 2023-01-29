@@ -67,14 +67,16 @@ target_compile_options ( pdm-network PRIVATE
 if(WIN32)
     target_link_libraries(pdm-network
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.dll.a
-        OpenSSL::SSL
-        OpenSSL::Crypto
         ${CURL_LIBRARIES} )
+    set(DIR_NAME_PDM_NETWORK "")
 elseif (APPLE)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/libcurl.a ${CURL_LIBRARIES} )
+    set(DIR_NAME_PDM_NETWORK "_mac")
 elseif (UNIX)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib_linux/libcurl.a ${CURL_LIBRARIES} )
+    set(DIR_NAME_PDM_NETWORK "_linux")
 endif ()
 
 
-target_include_directories(pdm-network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(pdm-network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib${DIR_NAME_PDM_NETWORK}/)
