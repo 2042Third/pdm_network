@@ -70,15 +70,25 @@ if(WIN32)
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcurl.dll.a
         ${CURL_LIBRARIES} )
     set(DIR_NAME_PDM_NETWORK "")
+
+    target_include_directories(pdm-network PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib${DIR_NAME_PDM_NETWORK}/
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib/local/lib/)
+
 elseif (APPLE)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/libcurl.a ${CURL_LIBRARIES} )
     set(DIR_NAME_PDM_NETWORK "_mac")
+
+    target_include_directories(pdm-network PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib${DIR_NAME_PDM_NETWORK}/
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/local/lib/)
 elseif (UNIX)
     target_link_libraries(pdm-network ${CMAKE_CURRENT_SOURCE_DIR}/lib_linux/libcurl.a ${CURL_LIBRARIES} )
     set(DIR_NAME_PDM_NETWORK "_linux")
+
+    target_include_directories(pdm-network PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib${DIR_NAME_PDM_NETWORK}/
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib/local/lib/)
 endif ()
 
 
-target_include_directories(pdm-network PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/lib${DIR_NAME_PDM_NETWORK}/
-    ${CMAKE_CURRENT_SOURCE_DIR}/lib/local/lib/)
