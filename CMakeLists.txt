@@ -8,13 +8,18 @@
 #    add_subdirectory(openssl-cmake)
 #endif ()
 if(APPLE)
-#    list(APPEND CMAKE_PREFIX_PATH "/usr/local/opt")
-#    list(APPEND CMAKE_PREFIX_PATH /usr/local/opt/curl )
+    list(APPEND CMAKE_PREFIX_PATH /usr/local/opt )
+    list(APPEND CMAKE_PREFIX_PATH /usr/local/opt/openssl@3 )
+    list(APPEND CMAKE_PREFIX_PATH /usr/local/opt/zstd )
+    list(APPEND CMAKE_PREFIX_PATH /usr/local/opt/openldap )
+
 #
 #    set(OPENSSL_ROOT_DIR /usr/local/opt/openssl@3)
 #    set(Brotli_DIR /usr/local/opt/brotli)
+
     find_package(OpenSSL REQUIRED)
     include_directories(${OPENSSL_INCLUDE_DIR})
+
 #add_library(OpenSSL::SSL STATIC IMPORTED)
 #add_library(OpenSSL::Crypto STATIC IMPORTED)
 #set_target_properties(OpenSSL::SSL PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/local/lib/libssl.a)
@@ -98,9 +103,9 @@ if(WIN32)
             ${CMAKE_CURRENT_SOURCE_DIR}/lib/local/lib/)
 
 elseif (APPLE)
-#    # ZLIB
-#    find_path(ZLIB_INCLUDE_DIR NAMES zlib.h PATHS /usr/local/opt/zlib/include)
-#    find_library(ZLIB_LIBRARY NAMES z PATHS /usr/local/opt/zlib/lib)
+    # ZLIB
+    find_path(ZLIB_INCLUDE_DIR NAMES zlib.h PATHS /usr/local/opt/zlib/include)
+    find_library(ZLIB_LIBRARY NAMES z PATHS /usr/local/opt/zlib/lib)
 #
 #    # Brotli
 #    find_path(BROTLI_INCLUDE_DIR NAMES brotli/encode.h PATHS /usr/local/opt/brotli/include)
@@ -108,10 +113,11 @@ elseif (APPLE)
 #    find_library(BROTLI_DEC_LIBRARY NAMES brotlidec PATHS /usr/local/opt/brotli/lib)
 #    find_library(BROTLI_COMMON_LIBRARY NAMES brotlicommon PATHS /usr/local/opt/brotli/lib)
 #
-#    # Openldap
-#    find_path(LDAP_INCLUDE_DIR NAMES ldap.h PATHS /usr/local/opt/openldap/include)
-#    find_library(LDAP_LIBRARY NAMES ldap PATHS /usr/local/opt/openldap/lib)
-#    find_library(LBER_LIBRARY NAMES lber PATHS /usr/local/opt/openldap/lib)
+    # Openldap
+    find_path(LDAP_INCLUDE_DIR NAMES ldap.h PATHS /usr/local/opt/openldap/include)
+    find_library(LDAP_LIBRARY NAMES ldap PATHS /usr/local/opt/openldap/lib)
+    find_library(LBER_LIBRARY NAMES lber PATHS /usr/local/opt/openldap/lib)
+
 #
 #    # ZSTD
 #    find_path(ZSTD_INCLUDE_DIR NAMES zstd.h PATHS /usr/local/opt/zstd/include)
@@ -123,7 +129,7 @@ elseif (APPLE)
             ${CURL_LIBRARIES}
 #            ${ZLIB_LIBRARY}
 #            ${BROTLI_ENC_LIBRARY} ${BROTLI_DEC_LIBRARY} ${BROTLI_COMMON_LIBRARY}
-#            ${LDAP_LIBRARY} ${LBER_LIBRARY}
+            ${LDAP_LIBRARY} ${LBER_LIBRARY}
 #            ${ZSTD_LIBRARY}
             )
     set(DIR_NAME_PDM_NETWORK "_mac")
@@ -135,7 +141,7 @@ elseif (APPLE)
 #            ${CMAKE_CURRENT_SOURCE_DIR}/lib_mac/local/lib/
 #            ${ZLIB_INCLUDE_DIR}
 #            ${BROTLI_INCLUDE_DIR}
-#            ${LDAP_INCLUDE_DIR}
+            ${LDAP_INCLUDE_DIR}
 #            ${ZSTD_INCLUDE_DIR}
             )
     # Check if each library and include directory exists
